@@ -1,6 +1,6 @@
 # auv-planner 项目规则
 
-本仓库是独立 Git 仓库 `/home/bubble/水下机器人/global`，只承载全局规划器。
+本仓库是独立 Git 仓库 `/home/bubble/水下机器人/settled_全局规划器`，只承载全局规划器。
 
 ## 边界
 
@@ -14,7 +14,7 @@
 
 ```bash
 uv venv .venv
-uv pip install --python .venv/bin/python -e /home/bubble/水下机器人-meta-g02/settled_共享基础
+uv pip install --python .venv/bin/python -e /home/bubble/水下机器人/settled_共享基础
 uv pip install --python .venv/bin/python numpy pytest plotly matplotlib
 uv pip install --python .venv/bin/python --no-deps -e .
 PVS_SOURCE_DIR=/home/bubble/水下机器人/python/PythonVehicleSimulator-master/src \
