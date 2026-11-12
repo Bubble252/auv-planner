@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from auv_planner.contracts import PlanStatus, Trajectory
+from auv_core.contracts import PlanStatus, Trajectory
 from auv_planner.experiments.m7_1 import (
     AuditPoint,
     M71CaseSpec,
@@ -18,7 +18,7 @@ from auv_planner.experiments.m7_1 import (
     run_m7_1,
     sample_trajectory_states,
 )
-from auv_planner.scenarios import m5_open_water_scene
+from auv_core.scenarios import m5_open_water_scene
 
 
 def _trajectory() -> Trajectory:

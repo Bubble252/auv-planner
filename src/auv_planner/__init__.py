@@ -1,68 +1,74 @@
-"""Lazy public exports for the underwater planner package."""
+"""Lazy public exports for the underwater global planner package."""
 
 from __future__ import annotations
 
 from importlib import import_module
 from typing import TYPE_CHECKING
 
-_EXPORTS = {
-    "BODY_FRAME": ".contracts",
-    "WORLD_FRAME": ".contracts",
-    "ActuatorCommand": ".contracts",
-    "AlosSolution": ".guidance",
-    "CapabilitySet": ".contracts",
-    "ControlProposal": ".contracts",
-    "CurrentField": ".contracts",
-    "ClearanceDetails": ".geometry",
-    "DepthShearCurrent": ".current",
-    "EvalResult": ".contracts",
-    "GlobalPlanner": ".interfaces",
-    "Guidance": ".interfaces",
-    "HullSpec": ".geometry",
-    "LocalObservation": ".contracts",
-    "LocalPlanner": ".interfaces",
-    "MssRemus100Backend": ".dynamics",
-    "Obstacle": ".contracts",
-    "ObstacleMap": ".contracts",
-    "OccupancyGrid": ".geometry",
-    "PathMetrics": ".metrics",
-    "PlanReason": ".contracts",
-    "PlanRequest": ".contracts",
-    "PlanResult": ".contracts",
-    "PlanStatus": ".contracts",
-    "PvsRemus100Backend": ".dynamics",
-    "RecoveryCertificate": ".contracts",
-    "Reference": ".contracts",
-    "Remus100ControlDiagnostics": ".control",
-    "Remus100ActuatorCommand": ".contracts",
-    "Remus100TrackingController": ".control",
-    "SafeCommand": ".contracts",
-    "SafetyContext": ".contracts",
-    "SafetyFilter": ".interfaces",
-    "ScenarioConfig": ".contracts",
-    "SimulationSnapshot": ".contracts",
-    "SimulatorBackend": ".interfaces",
-    "State": ".contracts",
-    "SweepResult": ".geometry",
-    "TaskSpec": ".contracts",
-    "Trajectory": ".contracts",
-    "ThreeDAlosGuidance": ".guidance",
-    "TrackingController": ".interfaces",
-    "UniformCurrent": ".contracts",
-    "VehicleSpec": ".contracts",
-    "WorldSnapshot": ".contracts",
-    "compute_path_metrics": ".metrics",
-    "hull_clearance": ".geometry",
-    "hull_clearance_details": ".geometry",
-    "hull_from_vehicle": ".geometry",
-    "hull_sphere_centers": ".geometry",
-    "obstacle_signed_distance": ".geometry",
-    "point_clearance": ".geometry",
-    "point_clearance_details": ".geometry",
-    "trajectory_sweep": ".geometry",
+_CORE_EXPORTS = {
+    "BODY_FRAME",
+    "WORLD_FRAME",
+    "ActuatorCommand",
+    "AlosSolution",
+    "CapabilitySet",
+    "ClearanceDetails",
+    "ControlProposal",
+    "CurrentField",
+    "DepthShearCurrent",
+    "EvalResult",
+    "Guidance",
+    "HullSpec",
+    "LocalObservation",
+    "Obstacle",
+    "ObstacleMap",
+    "OccupancyGrid",
+    "PlanReason",
+    "PlanRequest",
+    "PlanResult",
+    "PlanStatus",
+    "RecoveryCertificate",
+    "Reference",
+    "Remus100ActuatorCommand",
+    "Remus100ControlDiagnostics",
+    "Remus100TrackingController",
+    "SafeCommand",
+    "SafetyContext",
+    "SafetyFilter",
+    "ScenarioConfig",
+    "SimulationSnapshot",
+    "SimulatorBackend",
+    "State",
+    "SweepResult",
+    "TaskSpec",
+    "ThreeDAlosGuidance",
+    "TrackingController",
+    "Trajectory",
+    "UniformCurrent",
+    "VehicleSpec",
+    "WorldSnapshot",
+    "hull_clearance",
+    "hull_clearance_details",
+    "hull_from_vehicle",
+    "hull_sphere_centers",
+    "obstacle_signed_distance",
+    "point_clearance",
+    "point_clearance_details",
+    "trajectory_sweep",
 }
 
-__all__ = list(_EXPORTS)
+_EXPORTS = {name: "auv_core" for name in _CORE_EXPORTS}
+_EXPORTS.update(
+    {
+        "GlobalPlanner": ".interfaces",
+        "LocalPlanner": ".interfaces",
+        "MssRemus100Backend": ".dynamics",
+        "PathMetrics": ".metrics",
+        "PvsRemus100Backend": ".dynamics",
+        "compute_path_metrics": ".metrics",
+    }
+)
+
+__all__ = sorted(_EXPORTS)
 
 
 def __getattr__(name: str) -> object:
@@ -80,17 +86,23 @@ def __dir__() -> list[str]:
 
 
 if TYPE_CHECKING:
-    from .contracts import (
+    from auv_core import (
         BODY_FRAME,
         WORLD_FRAME,
         ActuatorCommand,
+        AlosSolution,
         CapabilitySet,
+        ClearanceDetails,
         ControlProposal,
         CurrentField,
+        DepthShearCurrent,
         EvalResult,
+        Guidance,
+        HullSpec,
         LocalObservation,
         Obstacle,
         ObstacleMap,
+        OccupancyGrid,
         PlanReason,
         PlanRequest,
         PlanResult,
@@ -98,24 +110,23 @@ if TYPE_CHECKING:
         RecoveryCertificate,
         Reference,
         Remus100ActuatorCommand,
+        Remus100ControlDiagnostics,
+        Remus100TrackingController,
         SafeCommand,
         SafetyContext,
+        SafetyFilter,
         ScenarioConfig,
         SimulationSnapshot,
+        SimulatorBackend,
         State,
+        SweepResult,
         TaskSpec,
+        ThreeDAlosGuidance,
+        TrackingController,
         Trajectory,
         UniformCurrent,
         VehicleSpec,
         WorldSnapshot,
-    )
-    from .control import Remus100ControlDiagnostics, Remus100TrackingController
-    from .current import DepthShearCurrent
-    from .geometry import (
-        ClearanceDetails,
-        HullSpec,
-        OccupancyGrid,
-        SweepResult,
         hull_clearance,
         hull_clearance_details,
         hull_from_vehicle,
@@ -125,13 +136,7 @@ if TYPE_CHECKING:
         point_clearance_details,
         trajectory_sweep,
     )
-    from .guidance import AlosSolution, ThreeDAlosGuidance
-    from .interfaces import (
-        GlobalPlanner,
-        Guidance,
-        LocalPlanner,
-        SafetyFilter,
-        SimulatorBackend,
-        TrackingController,
-    )
+
+    from .dynamics import MssRemus100Backend, PvsRemus100Backend
+    from .interfaces import GlobalPlanner, LocalPlanner
     from .metrics import PathMetrics, compute_path_metrics

@@ -11,7 +11,7 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import PlanResult
+from auv_core.contracts import PlanResult
 from ..evaluation.runner import EvaluationRecord, run_scenario
 from ..planners.astar import AStarPlanner
 from ..planners.recoverable import RecoverablePlanner, RecoverablePlannerConfig

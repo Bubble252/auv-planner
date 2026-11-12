@@ -18,7 +18,7 @@ from matplotlib.patches import Circle, Rectangle
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
-from auv_planner.contracts import ObstacleMap, ScenarioConfig
+from auv_core.contracts import ObstacleMap, ScenarioConfig
 from auv_planner.experiments.m7_1 import M71Config, m71_case_specs
 
 

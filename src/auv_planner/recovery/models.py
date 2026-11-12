@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import CapabilitySet, RecoveryCertificate, Trajectory, VehicleSpec
+from auv_core.contracts import CapabilitySet, RecoveryCertificate, Trajectory, VehicleSpec
 
 
 class FaultKind(str, Enum):

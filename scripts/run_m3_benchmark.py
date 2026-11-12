@@ -6,7 +6,7 @@ from pathlib import Path
 from auv_planner.evaluation import run_suite, write_metrics_csv
 from auv_planner.planners.astar import AStarPlanner
 from auv_planner.planners.rrt_star import RRTStarPlanner
-from auv_planner.scenarios import fixed_scenarios
+from auv_core.scenarios import fixed_scenarios
 
 
 def parse_args() -> argparse.Namespace:

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from ..contracts import (
+from auv_core.contracts import (
     FloatArray,
     ObstacleMap,
     ScenarioConfig,
@@ -16,16 +16,16 @@ from ..contracts import (
     UniformCurrent,
     WorldSnapshot,
 )
-from ..control import Remus100TrackingController
-from ..dynamics.remus100 import PvsRemus100Backend
+from auv_core.control.remus100 import Remus100TrackingController
+from auv_core.dynamics.remus100 import PvsRemus100Backend
 from ..evaluation.closed_loop import (
     ClosedLoopResult,
     run_closed_loop,
     write_closed_loop_log,
     write_closed_loop_summary_csv,
 )
-from ..guidance import ThreeDAlosGuidance
-from ..scenarios import remus100_vehicle
+from auv_core.guidance import ThreeDAlosGuidance
+from auv_core.scenarios import remus100_vehicle
 
 
 @dataclass(frozen=True)

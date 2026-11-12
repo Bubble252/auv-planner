@@ -6,9 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .contracts import Obstacle, ScenarioConfig, UniformCurrent
-from .current import DepthShearCurrent
-from .scenarios import (
+from auv_core.contracts import Obstacle, ScenarioConfig, UniformCurrent
+from auv_core.current import DepthShearCurrent
+from auv_core.scenarios import (
     m5_cross_current_sphere_scene,
     m5_cylinder_gate_scene,
     m5_depth_shear_gate_scene,

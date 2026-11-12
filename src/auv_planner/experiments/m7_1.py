@@ -11,8 +11,8 @@ from typing import Any
 
 import numpy as np
 
-from ..attitude import forward_quaternion
-from ..contracts import (
+from auv_core.attitude import forward_quaternion
+from auv_core.contracts import (
     CapabilitySet,
     FloatArray,
     PlanReason,
@@ -25,7 +25,7 @@ from ..contracts import (
     Trajectory,
 )
 from ..evaluation.runner import EvaluationRecord, evaluate_plan, run_scenario
-from ..geometry import trajectory_sweep
+from auv_core.geometry import trajectory_sweep
 from ..metrics import compute_path_metrics
 from ..planners.astar import AStarPlanner
 from ..planners.common import SegmentValidator, build_trajectory

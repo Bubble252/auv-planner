@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from auv_planner.contracts import EvalResult, Obstacle, ObstacleMap, Trajectory, VehicleSpec
+from auv_core.contracts import EvalResult, Obstacle, ObstacleMap, Trajectory, VehicleSpec
 from auv_planner.metrics import compute_path_metrics
 
 

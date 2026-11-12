@@ -15,7 +15,7 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import ScenarioConfig, State
+from auv_core.contracts import ScenarioConfig, State
 from ..recovery import (
     DEFAULT_FAULT_PROFILES,
     DEFAULT_FAULTS,
@@ -30,7 +30,7 @@ from ..recovery import (
     build_maneuvers,
     prefilter_state,
 )
-from ..scenarios import m5_multi_obstacle_scene, m5_single_corner_scene
+from auv_core.scenarios import m5_multi_obstacle_scene, m5_single_corner_scene
 from .m6_recovery import m6_key_nodes
 
 ONLINE_BUDGET_S = 10.0

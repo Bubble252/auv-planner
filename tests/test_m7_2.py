@@ -7,13 +7,13 @@ from typing import Any
 
 import numpy as np
 
-from auv_planner.contracts import State
+from auv_core.contracts import State
 from auv_planner.experiments.m6_recovery import dead_end_scene
 from auv_planner.experiments.m7_1 import _plan_request
 from auv_planner.experiments.m7_2 import M72Config, run_m7_2
 from auv_planner.metrics import compute_path_metrics
 from auv_planner.planners.recoverable import RecoverablePlanner, RecoverablePlannerConfig
-from auv_planner.scenarios import m5_open_water_scene
+from auv_core.scenarios import m5_open_water_scene
 
 
 def _planner(

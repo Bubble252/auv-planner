@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import (
+from auv_core.contracts import (
     FloatArray,
     RecoveryCertificate,
     State,
@@ -16,7 +16,7 @@ from ..contracts import (
     VehicleSpec,
     WorldSnapshot,
 )
-from ..geometry import (
+from auv_core.geometry import (
     hull_clearance_details,
     hull_from_vehicle,
     point_clearance_details,

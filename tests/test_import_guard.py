@@ -31,8 +31,8 @@ def test_core_import_does_not_load_simulator_ros_or_torch() -> None:
         "import sys\n"
         "import auv_planner\n"
         "forbidden = {'holoocean', 'rclpy', 'torch', 'python_vehicle_simulator', "
-        "'auv_planner.contracts', 'auv_planner.control', 'auv_planner.guidance', "
-        "'auv_planner.planners', 'auv_planner.dynamics.remus100'}\n"
+        "'auv_core.contracts', 'auv_planner.control', 'auv_core.guidance', "
+        "'auv_planner.planners', 'auv_core.dynamics.remus100'}\n"
         "loaded = forbidden.intersection(sys.modules)\n"
         "if loaded:\n"
         "    raise SystemExit(sorted(loaded))\n"
@@ -43,11 +43,11 @@ def test_core_import_does_not_load_simulator_ros_or_torch() -> None:
 def test_contract_import_does_not_load_guidance_or_planners() -> None:
     _assert_clean(
         "import sys\n"
-        "import auv_planner.contracts\n"
+        "import auv_core.contracts\n"
         "forbidden = {'holoocean', 'rclpy', 'torch', 'python_vehicle_simulator', "
-        "'auv_planner.control', 'auv_planner.current', 'auv_planner.geometry', "
-        "'auv_planner.guidance', 'auv_planner.interfaces', 'auv_planner.metrics', "
-        "'auv_planner.planners', 'auv_planner.scenarios', 'auv_planner.dynamics.remus100'}\n"
+        "'auv_planner.control', 'auv_core.current', 'auv_core.geometry', "
+        "'auv_core.guidance', 'auv_planner.interfaces', 'auv_planner.metrics', "
+        "'auv_planner.planners', 'auv_core.scenarios', 'auv_core.dynamics.remus100'}\n"
         "loaded = forbidden.intersection(sys.modules)\n"
         "if loaded:\n"
         "    raise SystemExit(sorted(loaded))\n"
@@ -58,9 +58,9 @@ def test_contract_import_does_not_load_guidance_or_planners() -> None:
 def test_guidance_import_does_not_load_planners_or_simulator() -> None:
     _assert_clean(
         "import sys\n"
-        "import auv_planner.guidance\n"
+        "import auv_core.guidance\n"
         "forbidden = {'python_vehicle_simulator', 'auv_planner.control', "
-        "'auv_planner.planners', 'auv_planner.dynamics.remus100'}\n"
+        "'auv_planner.planners', 'auv_core.dynamics.remus100'}\n"
         "loaded = forbidden.intersection(sys.modules)\n"
         "if loaded:\n"
         "    raise SystemExit(sorted(loaded))\n"

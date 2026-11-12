@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from .contracts import (
+from auv_core.contracts import (
     CapabilitySet,
     ControlProposal,
     LocalObservation,

@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from .contracts import EvalResult, ObstacleMap, Trajectory, VehicleSpec
-from .geometry import trajectory_sweep
+from auv_core.contracts import EvalResult, ObstacleMap, Trajectory, VehicleSpec
+from auv_core.geometry import trajectory_sweep
 
 
 @dataclass(frozen=True)

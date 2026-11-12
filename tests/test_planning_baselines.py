@@ -5,7 +5,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from auv_planner.contracts import (
+from auv_core.contracts import (
     CapabilitySet,
     Obstacle,
     ObstacleMap,
@@ -20,7 +20,7 @@ from auv_planner.contracts import (
 from auv_planner.metrics import compute_path_metrics
 from auv_planner.planners.astar import AStarPlanner
 from auv_planner.planners.rrt_star import RRTStarPlanner
-from auv_planner.scenarios import (
+from auv_core.scenarios import (
     cylinder_gate_scene,
     fixed_scenarios,
     remus100_vehicle,

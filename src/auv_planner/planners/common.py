@@ -6,9 +6,9 @@ from math import ceil
 import numpy as np
 from numpy.typing import NDArray
 
-from ..attitude import forward_quaternion, quaternion_angle
-from ..contracts import FloatArray, ObstacleMap, PlanRequest, Trajectory, VehicleSpec
-from ..geometry import (
+from auv_core.attitude import forward_quaternion, quaternion_angle
+from auv_core.contracts import FloatArray, ObstacleMap, PlanRequest, Trajectory, VehicleSpec
+from auv_core.geometry import (
     HullSpec,
     SweepResult,
     hull_clearance_details_from_offsets,

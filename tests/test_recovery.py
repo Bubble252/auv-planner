@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from auv_planner.attitude import euler_from_quaternion
-from auv_planner.contracts import (
+from auv_core.attitude import euler_from_quaternion
+from auv_core.contracts import (
     Obstacle,
     ObstacleMap,
     State,
@@ -21,7 +21,7 @@ from auv_planner.experiments.m6_recovery import (
     m6_config_manifest,
     m6_key_nodes,
 )
-from auv_planner.geometry import hull_clearance_details, hull_from_vehicle
+from auv_core.geometry import hull_clearance_details, hull_from_vehicle
 from auv_planner.recovery import (
     DEFAULT_FAULTS,
     ClearanceModel,
@@ -32,7 +32,7 @@ from auv_planner.recovery import (
     RecoveryConfig,
     build_maneuvers,
 )
-from auv_planner.scenarios import m5_open_water_scene, remus100_vehicle
+from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / "configs" / "experiments" / "m6_recovery.json"

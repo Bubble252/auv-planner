@@ -6,7 +6,7 @@ from math import cos, sin
 import numpy as np
 import pytest
 
-from auv_planner.contracts import (
+from auv_core.contracts import (
     Reference,
     Remus100ActuatorCommand,
     SimulationSnapshot,
@@ -14,16 +14,16 @@ from auv_planner.contracts import (
     UniformCurrent,
 )
 from auv_planner.control import Remus100TrackingController
-from auv_planner.dynamics.remus100 import PvsRemus100Backend
+from auv_core.dynamics.remus100 import PvsRemus100Backend
 from auv_planner.evaluation.closed_loop import (
     project_onto_path,
     run_closed_loop,
     write_closed_loop_log,
 )
 from auv_planner.experiments.m4_closed_loop import m4_cases
-from auv_planner.guidance import ThreeDAlosGuidance
+from auv_core.guidance import ThreeDAlosGuidance
 from auv_planner.interfaces import Guidance, TrackingController
-from auv_planner.scenarios import remus100_vehicle
+from auv_core.scenarios import remus100_vehicle
 
 
 def _state(t_s: float = 0.0) -> State:

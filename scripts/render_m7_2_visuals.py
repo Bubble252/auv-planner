@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 import numpy as np
 
-from auv_planner.contracts import ObstacleMap, ScenarioConfig
+from auv_core.contracts import ObstacleMap, ScenarioConfig
 from auv_planner.experiments.m7_1 import M71Config, m71_case_specs
 
 

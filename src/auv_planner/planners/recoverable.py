@@ -6,8 +6,8 @@ from typing import Any
 
 import numpy as np
 
-from ..attitude import forward_quaternion, quaternion_angle
-from ..contracts import (
+from auv_core.attitude import forward_quaternion, quaternion_angle
+from auv_core.contracts import (
     FloatArray,
     Obstacle,
     ObstacleMap,

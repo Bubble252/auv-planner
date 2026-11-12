@@ -16,7 +16,7 @@ from matplotlib.axes import Axes
 from matplotlib.patches import Circle, Patch, Rectangle
 import numpy as np
 
-from auv_planner.contracts import ObstacleMap, State
+from auv_core.contracts import ObstacleMap, State
 from auv_planner.experiments.m7_budget import M7Probe, m7_audit_states, m7_probes
 from auv_planner.recovery import (
     P1_DEGRADED,

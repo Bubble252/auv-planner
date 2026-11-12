@@ -10,7 +10,7 @@ from typing import Protocol
 
 import numpy as np
 
-from ..contracts import (
+from auv_core.contracts import (
     FloatArray,
     Reference,
     Remus100ActuatorCommand,

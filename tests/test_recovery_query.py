@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from auv_planner.contracts import Obstacle, ObstacleMap, State, UniformCurrent, WorldSnapshot
+from auv_core.contracts import Obstacle, ObstacleMap, State, UniformCurrent, WorldSnapshot
 from auv_planner.experiments.m6_recovery import dead_end_scene
 from auv_planner.experiments.m7_budget import (
     _audit_full_cached,
@@ -28,7 +28,7 @@ from auv_planner.recovery import (
     RecoveryQuerySession,
     RecoveryQueryStatus,
 )
-from auv_planner.scenarios import m5_open_water_scene, remus100_vehicle
+from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / "configs" / "experiments" / "m7_budget.json"

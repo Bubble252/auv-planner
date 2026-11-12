@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import (
+from auv_core.contracts import (
     CapabilitySet,
     EvalResult,
     PlanRequest,

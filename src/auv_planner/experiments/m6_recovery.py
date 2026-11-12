@@ -9,8 +9,8 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import Obstacle, ObstacleMap, ScenarioConfig, State, UniformCurrent, WorldSnapshot
-from ..current import DepthShearCurrent
+from auv_core.contracts import Obstacle, ObstacleMap, ScenarioConfig, State, UniformCurrent, WorldSnapshot
+from auv_core.current import DepthShearCurrent
 from ..recovery import (
     DEFAULT_DIAGNOSIS_DELAYS_S,
     DEFAULT_FAULTS,
@@ -22,7 +22,7 @@ from ..recovery import (
     RecoveryAssessment,
     RecoveryConfig,
 )
-from ..scenarios import (
+from auv_core.scenarios import (
     m5_cylinder_gate_scene,
     m5_depth_shear_gate_scene,
     m5_open_water_scene,

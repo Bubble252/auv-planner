@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from auv_planner.geometry import point_clearance
+from auv_core.geometry import point_clearance
 from auv_planner.scene_catalog import (
     m5_scene_catalog,
     scene_catalog_digest,

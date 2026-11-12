@@ -4,14 +4,14 @@ import csv
 import json
 from dataclasses import replace
 
-from auv_planner.contracts import PlanResult, PlanStatus
+from auv_core.contracts import PlanResult, PlanStatus
 from auv_planner.evaluation import (
     run_scenario,
     write_metrics_csv,
     write_run_log,
 )
 from auv_planner.planners.astar import AStarPlanner
-from auv_planner.scenarios import empty_scene
+from auv_core.scenarios import empty_scene
 
 
 class NoSolutionPlanner:

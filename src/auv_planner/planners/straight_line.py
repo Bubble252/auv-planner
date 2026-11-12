@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from ..contracts import PlanRequest, PlanResult, PlanStatus, Trajectory
+from auv_core.contracts import PlanRequest, PlanResult, PlanStatus, Trajectory
 
 
 class StraightLinePlanner:

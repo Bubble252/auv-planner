@@ -10,8 +10,8 @@ from typing import Any
 
 import numpy as np
 
-from ..attitude import euler_from_quaternion, quaternion_from_euler
-from ..contracts import (
+from auv_core.attitude import euler_from_quaternion, quaternion_from_euler
+from auv_core.contracts import (
     CurrentField,
     FloatArray,
     ObstacleMap,
@@ -23,14 +23,14 @@ from ..contracts import (
     UniformCurrent,
     WorldSnapshot,
 )
-from ..control import Remus100TrackingController
-from ..current import DepthShearCurrent
+from auv_core.control.remus100 import Remus100TrackingController
+from auv_core.current import DepthShearCurrent
 from ..dynamics.mss_remus100 import MssRemus100Backend
-from ..dynamics.remus100 import PvsRemus100Backend
+from auv_core.dynamics.remus100 import PvsRemus100Backend
 from ..evaluation.closed_loop import ClosedLoopResult, run_closed_loop
-from ..guidance import ThreeDAlosGuidance
+from auv_core.guidance import ThreeDAlosGuidance
 from ..interfaces import SimulatorBackend
-from ..scenarios import remus100_vehicle
+from auv_core.scenarios import remus100_vehicle
 from .m4_closed_loop import m4_cases
 
 CommandPolicy = Callable[[State], Remus100ActuatorCommand]

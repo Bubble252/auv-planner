@@ -9,9 +9,9 @@ from typing import Any
 
 import numpy as np
 
-from ..contracts import FloatArray, State, UniformCurrent, VehicleSpec, WorldSnapshot
-from ..current import DepthShearCurrent
-from ..geometry import (
+from auv_core.contracts import FloatArray, State, UniformCurrent, VehicleSpec, WorldSnapshot
+from auv_core.current import DepthShearCurrent
+from auv_core.geometry import (
     ClearanceDetails,
     hull_clearance_details,
     hull_from_vehicle,

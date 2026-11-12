@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from auv_planner.contracts import (
+from auv_core.contracts import (
     ActuatorCommand,
     CapabilitySet,
     EvalResult,

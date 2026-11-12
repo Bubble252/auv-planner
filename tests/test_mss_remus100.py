@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from auv_planner.attitude import quaternion_from_euler
-from auv_planner.contracts import (
+from auv_core.attitude import quaternion_from_euler
+from auv_core.contracts import (
     CurrentField,
     ObstacleMap,
     Remus100ActuatorCommand,
@@ -17,14 +17,14 @@ from auv_planner.contracts import (
     UniformCurrent,
     WorldSnapshot,
 )
-from auv_planner.current import DepthShearCurrent
+from auv_core.current import DepthShearCurrent
 from auv_planner.dynamics.mss_remus100 import (
     MssRemus100Backend,
     _default_daemon_script,
     _default_mss_source_dir,
 )
-from auv_planner.dynamics.remus100 import PvsRemus100Backend
-from auv_planner.scenarios import remus100_vehicle
+from auv_core.dynamics.remus100 import PvsRemus100Backend
+from auv_core.scenarios import remus100_vehicle
 
 OCTAVE_AVAILABLE = shutil.which("octave") is not None
 MSS_AVAILABLE = _default_mss_source_dir().is_dir() and _default_daemon_script().is_file()

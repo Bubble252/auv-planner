@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from ..contracts import PlanRequest, PlanResult, PlanStatus
+from auv_core.contracts import PlanRequest, PlanResult, PlanStatus
 from .common import SegmentValidator, finalize_path
 
 
