@@ -1,6 +1,6 @@
 # auv-planner 项目规则
 
-本仓库是独立 Git 仓库 `/home/bubble/水下机器人-global`，只承载全局规划器。
+本仓库是独立 Git 仓库 `/home/bubble/水下机器人/global`，只承载全局规划器。
 
 ## 边界
 
