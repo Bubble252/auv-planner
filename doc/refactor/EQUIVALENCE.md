@@ -122,3 +122,39 @@ skill_usage:
 - 是否新增失败：`no`；
 - 回滚 commit：`7242368`；
 - 结论：`PASS`
+
+## 3. 候选 GLOBAL-A3
+
+```yaml
+goal: META-G03
+candidate: GLOBAL-A3
+repository: settled_全局规划器
+base_commit: 0d4c46b
+branch: refactor/global-20261113
+files:
+  - src/auv_planner/experiments/m6_recovery.py
+  - src/auv_planner/experiments/m7_budget.py
+public_api_change: none
+```
+
+GLOBAL-A3 只迁移 M6 config manifest 和 M7 budget manifest 两个公开 writer 到同一个
+稳定 JSON 文档 helper。两个 writer 仍先创建父目录，再写出 UTF-8 文件并返回 `Path`；
+manifest payload、字段、排序、缩进和末尾换行保持不变。
+
+| 项目 | 重构前 | 重构后 | 证据 |
+|---|---|---|---|
+| M6 manifest 字节 | `dumps(...)+ "\n"` | 同一 helper | 字节测试 |
+| M7 manifest 字节 | `dumps(...)+ "\n"` | 同一 helper | 字节测试 |
+| 父目录 | 创建 | 保持 | 临时目录测试 |
+| 返回路径 | 输入路径的 `Path` | 相同 | 临时目录测试 |
+| manifest schema | 不变 | 不变 | committed manifest 测试 |
+
+验证命令：
+
+```bash
+cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+/home/bubble/水下机器人/settled_全局规划器/.venv/bin/python \
+  -m pytest -q tests/test_recovery.py tests/test_recovery_query.py tests/test_json_io.py
+```
+
+- 结果：`PENDING`
