@@ -64,3 +64,38 @@ skill_usage:
 - 是否新增失败：`no`；
 - 回滚 commit：`f606816`；
 - 结论：`PASS`
+
+## 2. 候选 GLOBAL-A2
+
+```yaml
+goal: META-G03
+candidate: GLOBAL-A2
+repository: settled_全局规划器
+base_commit: 7242368
+branch: refactor/global-20261113
+files:
+  - src/auv_planner/scene_catalog.py
+public_api_change: none
+```
+
+GLOBAL-A2 把 `write_scene_catalog_manifest` 的 JSON 文档写出迁移到 GLOBAL-A1 的
+helper。函数仍先创建父目录，再写 UTF-8 文件并返回 `Path`；manifest payload、字段、
+排序、digest 和路径返回值都不变。
+
+| 项目 | 重构前 | 重构后 | 证据 |
+|---|---|---|---|
+| 文档文本 | `json.dumps(..., indent=2, sort_keys=True) + "\n"` | 同一 helper | 字节 fixture |
+| 父目录 | 创建 | 保持 | 临时目录测试 |
+| 返回路径 | 输入路径的 `Path` | 相同 | 临时目录测试 |
+| manifest schema | 不变 | 不变 | committed manifest 测试 |
+| digest | 不变 | 不变 | catalog digest 测试 |
+
+验证命令：
+
+```bash
+cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+/home/bubble/水下机器人/settled_全局规划器/.venv/bin/python \
+  -m pytest -q tests/test_m5_scene_catalog.py
+```
+
+- 结果：`PENDING`
