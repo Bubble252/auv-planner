@@ -58,8 +58,8 @@ manifest 写出。
 | 优先级 | 候选 | 边界 | 状态 / 前置证据 |
 |---|---|---|---|
 | P0 | GLOBAL-A1：稳定 JSON 文档 helper | 纯函数 + `evaluation/runner.py` 一个调用点 | DONE；字节等价测试和 runner 全量回归 |
-| P1 | GLOBAL-A2：scene catalog 迁移到同一 helper | payload、digest 和父目录行为不变 | IN_PROGRESS；catalog 测试 |
-| P2 | GLOBAL-A3：M6/M7 manifest 迁移 | 只改写出边界，不改 manifest 字段 | PENDING；manifest 等价测试 |
+| P1 | GLOBAL-A2：scene catalog 迁移到同一 helper | payload、digest 和父目录行为不变 | DONE；catalog 字节测试和全量回归 |
+| P2 | GLOBAL-A3：M6/M7 manifest 迁移 | 只改写出边界，不改 manifest 字段 | IN_PROGRESS；manifest 等价测试 |
 | P3 | GLOBAL-A4：CSV 写出差异表 | 只读比较字段/空值/编码 | PENDING；不做合并 |
 | P4 | 入口和超大模块拆分 | 一次一个职责 | PENDING；需单独 Goal 或明确候选 |
 

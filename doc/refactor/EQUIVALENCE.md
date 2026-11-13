@@ -98,4 +98,27 @@ cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20
   -m pytest -q tests/test_m5_scene_catalog.py
 ```
 
-- 结果：`PENDING`
+Preflight 证据：
+
+```yaml
+skill_usage:
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+    module: src/auv_planner/scene_catalog.py
+```
+
+- 候选 commit：`deb83dd`；测试 commit：`9c2fd62`；计划 commit：`113ae27`；
+- 针对性测试：`9 passed`；
+- 全量测试：`98 passed`；
+- ruff：scene catalog、helper、catalog 测试和 JSON helper 测试全部 PASS；
+- format：相关文件全部 PASS；
+- mypy：`3 errors / 2 files`，与基线一致，无新增类型错误；
+- shape：`0 new violations, 119 suppressed`；
+- dependency checker：`repository dependency boundaries: ok`；
+- 字节等价：catalog manifest 的 payload、排序、缩进、末尾换行和 digest 不变；
+- 已知失败：无新增；
+- 是否新增失败：`no`；
+- 回滚 commit：`7242368`；
+- 结论：`PASS`
