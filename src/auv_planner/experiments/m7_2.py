@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import csv
 import json
 from collections import Counter
 from collections.abc import Sequence
@@ -10,8 +9,9 @@ from time import perf_counter
 from typing import Any
 
 import numpy as np
-
 from auv_core.contracts import PlanResult
+
+from .._csv import write_csv_allow_empty
 from ..evaluation.runner import EvaluationRecord, run_scenario
 from ..planners.astar import AStarPlanner
 from ..planners.recoverable import RecoverablePlanner, RecoverablePlannerConfig
@@ -546,13 +546,7 @@ def _write_pareto_csv(path: Path, runs: Sequence[M72Run]) -> None:
 
 
 def _write_csv(path: Path, rows: Sequence[dict[str, Any]]) -> None:
-    if not rows:
-        path.write_text("", encoding="utf-8")
-        return
-    with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
-        writer.writeheader()
-        writer.writerows(rows)
+    write_csv_allow_empty(path, rows)
 
 
 def _stats(values: Sequence[float]) -> dict[str, float | int]:
