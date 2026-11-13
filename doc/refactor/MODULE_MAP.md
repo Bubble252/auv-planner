@@ -15,7 +15,7 @@
 | `src/auv_planner/experiments/m4_closed_loop.py` | M4 闭环实验编排 | 不实现控制器 | `M4Config` 等 | M4 测试 | experiments | 存量文件长度 |
 | `src/auv_planner/experiments/m5_validation.py` | M5 验证、报告和对比 | 不修改 scene catalog 契约 | `M5Config` 等 | `tests/test_m5_validation.py` | experiments | 存量文件长度 |
 | `src/auv_planner/experiments/m6_recovery.py` | M6 恢复实验、证书和 summary | 不修改恢复 checker | `m6_config_manifest` 等 | `tests/test_recovery.py` | experiments | 无 |
-| `src/auv_planner/experiments/m7_1.py` | M7.1 路径审计实验与 artifact | 不修改 planner | `M71Config` 等 | `tests/test_m7_1.py` | experiments | 存量文件长度 |
+| `src/auv_planner/experiments/m7_1/` | M7.1 路径审计实验与 artifact；`types/audit/repair/io/runner` 分层 | 不修改 planner、case、阈值或 artifact schema | `M71Config` 等（由 `__init__.py` re-export） | `tests/test_m7_1.py`、`tests/test_m7_1_golden.py` | experiments | 存量函数复杂度/长度 |
 | `src/auv_planner/experiments/m7_2.py` | M7.2 死端实验与 artifact | 不修改 recoverability 判定 | `M72Config` 等 | `tests/test_m7_2.py` | experiments | 存量文件长度 |
 | `src/auv_planner/experiments/m7_budget.py` | M7 预算实验和缓存审计 | 不修改 scene 或 planner 契约 | `m7_budget_manifest` 等 | `tests/test_recovery_query.py` | experiments | 存量文件长度 |
 | `src/auv_planner/recovery/models.py` | 恢复证书和稳定摘要模型 | 不执行规划 | `RecoveryCertificate` 等 | `tests/test_recovery.py` | recovery | 无 |

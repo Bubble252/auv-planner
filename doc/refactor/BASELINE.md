@@ -42,8 +42,9 @@ export MSS_SOURCE_DIR=/home/bubble/水下机器人/simulator/MSS-master
 
 - ruff 45 errors 和 7 个未格式化文件是历史基线，不在候选 commit 中整仓清理；
 - mypy 3 个 `unused-ignore` 是历史类型检查欠账，不通过关闭检查或增加 ignore 修复；
-- `m7_1.py`、`planners/recoverable.py`、`m5_validation.py`、`m7_budget.py` 和
-  `m7_2.py` 超过新代码硬上限，只进入 shape ratchet，不在 pilot 中整文件重写；
+- `m7_1.py` 已由 G04-BIG1 拆成 `m7_1/` package；`planners/recoverable.py`、
+  `m5_validation.py`、`m7_budget.py` 和 `m7_2.py` 仍超过新代码硬上限，继续进入
+  shape ratchet，不在当前 pilot 中整文件重写；
 - `scripts/render_*` 的导入顺序和格式欠账与核心评价/实验入口分离，后续单独候选。
 
 ## 5. 回滚点

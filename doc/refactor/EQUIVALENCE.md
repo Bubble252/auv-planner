@@ -249,3 +249,64 @@ skill_usage:
 - dependency checker：`repository dependency boundaries: ok`；
 - 回滚 commit：`4fe888e`；
 - 结论：`PASS`
+
+## 5. 候选 GLOBAL-A5
+
+```yaml
+goal: META-G04-BIG1
+candidate: GLOBAL-A5
+repository: settled_全局规划器
+base_commit: 923663e
+branch: refactor/g04-big1-m71-20261113
+files:
+  - src/auv_planner/experiments/m7_1/types.py
+  - src/auv_planner/experiments/m7_1/audit.py
+  - src/auv_planner/experiments/m7_1/repair.py
+  - src/auv_planner/experiments/m7_1/io.py
+  - src/auv_planner/experiments/m7_1/runner.py
+  - src/auv_planner/experiments/m7_1/__init__.py
+  - tests/test_m7_1_golden.py
+public_api_change: none
+```
+
+GLOBAL-A5 把原先约 1477 行的 `m7_1.py` 拆成 `types`、`audit`、`repair`、`io` 和
+薄 `runner`。包级 `__init__.py` 只做兼容 re-export；`m7_2.py`、CLI、测试和
+viz 继续使用原导入路径。拆分没有改变 case、planner、阈值、采样、repair 搜索、
+CSV 字段/顺序、summary/manifest schema、reward、termination、success 或 seed。
+
+| 项目 | 重构前 | 重构后 | 证据 |
+|---|---|---|---|
+| 公共入口 | `m7_1.py` 导出 | package `__init__.py` re-export | `test_m7_1.py`、`test_m7_2.py` |
+| 私有兼容入口 | `_plan_request`、`_candidate_states`、`_write_csv` | 从实际实现模块 re-export | `test_m7_2.py`、`test_csv_writers.py` |
+| 结果对象 | 字段和顺序不变 | 相同 | golden result signature |
+| CSV/summary/manifest | 原 writer 输出 | 逐项字节等价 | `test_m7_1_golden.py` |
+| 运行时间字段 | 不可字节比较 | 归一化 `<time>` | golden fixture |
+| Git provenance | 提交后 `git_commit` 必变 | 归一化 `<commit>` | golden fixture |
+| 文件规模 | `m7_1.py` 1477 行 | 最大模块约 442 行 | `wc -l` |
+
+golden 首次运行时发现 `manifest.json` 的运行时 `hardware.git_commit` 被纳入字节哈希：
+生成 fixture 时的 commit 为 `923663e`，提交 golden 后的 HEAD 为 `9f2633a`，导致
+测试自失效。修复只把 `git_commit` 归一化为 `<commit>`，其余 manifest 字段仍参与
+哈希；其他五个 artifact 的预期 SHA256 未改变。
+
+验证命令：
+
+```bash
+cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-g04-big1-m71-20261113
+/home/bubble/水下机器人/settled_全局规划器/.venv/bin/python -m pytest -q \
+  tests/test_m7_1_golden.py tests/test_m7_1.py tests/test_m7_2.py tests/test_csv_writers.py
+/home/bubble/水下机器人/settled_全局规划器/.venv/bin/python -m pytest -q tests
+```
+
+- 代码 commits：`6ed46ee`（types）、`b0b2313`（audit）、`49b1df7`（repair）、
+  `cfc4b2d`（io）、`ae9e265`（shape ratchet）；
+- golden 修复 commit：`3df0f14`；
+- 定向测试：`22 passed`；
+- 全量测试（不带 PVS/MSS）：`103 passed, 6 skipped`；
+- 全量测试（完整 PVS/MSS）：`109 passed`；
+- ruff / format：改动文件 PASS；
+- mypy：`3 errors / 2 files`，与基线一致；
+- shape：`0 new violations, 117 suppressed`；
+- dependency checker：`repository dependency boundaries: ok`；
+- 回滚 commit：`923663e`；
+- 结论：`PASS`

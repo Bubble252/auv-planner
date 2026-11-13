@@ -33,14 +33,16 @@ manifest 写出。
 
 | 文件 | 行数 | 说明 |
 |---|---:|---|
-| `src/auv_planner/experiments/m7_1.py` | 1483 | M7.1 实验、聚合和 artifact 写出 |
+| `src/auv_planner/experiments/m7_1.py` | 1483 | G04-BIG1 已拆为 `m7_1/` package；保留此历史规模用于基线追溯 |
 | `src/auv_planner/planners/recoverable.py` | 1144 | 可恢复路径规划与证书 |
 | `src/auv_planner/experiments/m5_validation.py` | 1134 | M5 验证、报告和对比 |
 | `src/auv_planner/experiments/m7_budget.py` | 851 | 预算实验和缓存审计 |
 | `src/auv_planner/experiments/m7_2.py` | 750 | M7.2 实验、CSV 和 summary |
 | `src/auv_planner/viz/m71_trajectory3d.py` | 745 | 3D 可视化 |
 
-这些文件进入 `CODE_SHAPE_BASELINE.json`，本 pilot 不整文件重写。
+这些文件进入 `CODE_SHAPE_BASELINE.json`。`m7_1.py` 已由 G04-BIG1 拆为
+`types.py`、`audit.py`、`repair.py`、`io.py`、`runner.py`；剩余超大文件仍按
+后续 BIG/Layout 子 Goal 处理。
 
 ## 4. 边界与冻结契约
 
