@@ -1,3 +1,5 @@
+"""Candidate generation and deterministic repair search for M7.1 paths."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable

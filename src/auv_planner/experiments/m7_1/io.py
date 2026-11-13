@@ -1,3 +1,5 @@
+"""Byte-stable CSV, summary, and manifest writers for M7.1 artifacts."""
+
 from __future__ import annotations
 
 import json

@@ -1,3 +1,5 @@
+"""Configuration and result models shared by the M7.1 experiment modules."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -1,3 +1,5 @@
+"""Stable public surface for the M7.1 planner trajectory audit."""
+
 from __future__ import annotations
 
 from .audit import audit_trajectory, coverage_metrics, sample_trajectory_states

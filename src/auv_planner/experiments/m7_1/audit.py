@@ -1,3 +1,5 @@
+"""Trajectory sampling, certificate coverage, and M7.1 path auditing."""
+
 from __future__ import annotations
 
 from collections import Counter

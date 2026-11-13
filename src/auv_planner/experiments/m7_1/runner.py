@@ -1,3 +1,5 @@
+"""M7.1 case planning and experiment orchestration."""
+
 from __future__ import annotations
 
 from pathlib import Path
