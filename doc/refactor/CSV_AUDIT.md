@@ -1,6 +1,6 @@
 # CSV Writer Audit
 
-**状态**：`READ_ONLY_COMPLETE`<br>
+**状态**：`G04_CSV_EQUIVALENT_SUBSET_COMPLETE`<br>
 **日期**：2026-11-13<br>
 **范围**：`src/auv_planner/experiments/` 中 5 个 `_write_csv` 实现。
 
@@ -38,3 +38,34 @@
 5. 历史 artifact 读取回归。
 
 在这些测试完成前，CSV 写出保留原地实现。复制逻辑的清理留给 G04 的候选队列。
+
+## 5. G04-CSV 实施结果
+
+`META-G04-CSV` 只迁移了 `m7_1.py` 与 `m7_2.py` 这一组完全同语义 writer：
+
+- 空 rows：写空文件；
+- header：第一条记录的 key 顺序；
+- list 值：保留 Python 字符串表示，不做 M6 式 `|` 连接；
+- 父目录：不创建；
+- 换行：`newline=""` 与默认 CSV `\r\n`。
+
+共享实现位于 `src/auv_planner/_csv.py`，两个原 `_write_csv` 保留为兼容 wrapper。
+`tests/test_csv_writers.py` 对两个入口分别锁定空输入、特殊字符、列表值、换行和
+父目录行为。
+
+以下 writer 明确不迁移：
+
+- `m5_validation.py`：拒绝空输入，并使用所有 row 的 key 并集；
+- `m6_recovery.py`：拒绝空输入、创建父目录，并对 list 做 `|` 连接；
+- `m7_budget.py`：拒绝空输入并创建父目录；
+- `evaluation/runner.py`、`evaluation/closed_loop.py` 和 M4/M5/M6/M7 report writer：
+  字段来源、返回路径或报告文本契约不同。
+
+验证结果：
+
+- 定向测试：`21 passed`（`test_csv_writers.py`、`test_m7_1.py`、`test_m7_2.py`）；
+- 全量测试：`108 passed`；
+- 改动文件 ruff / format：PASS；
+- shape：`0 new violations, 119 suppressed`；
+- dependency checker：PASS；
+- mypy：`3 errors / 2 files`，与历史基线一致，无新增。
