@@ -1,5 +1,5 @@
 version: 1
-status: ref_global_inventory
+status: ref_global_complete
 waivers: []
 
 # 存量超大模块由 CODE_SHAPE_BASELINE.json 做 ratchet 抑制；未触碰时不进入新代码

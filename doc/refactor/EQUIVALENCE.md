@@ -1,6 +1,6 @@
 # auv-planner Equivalence Evidence
 
-**状态**：`REF_GLOBAL_INVENTORY_COMPLETE`<br>
+**状态**：`REF_GLOBAL_COMPLETE`<br>
 **仓库**：`settled_全局规划器`<br>
 **基线 commit**：`f606816`<br>
 **日期**：2026-11-13

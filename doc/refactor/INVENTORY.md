@@ -1,6 +1,6 @@
 # auv-planner Refactor Inventory
 
-**状态**：`REF_GLOBAL_INVENTORY_COMPLETE`<br>
+**状态**：`REF_GLOBAL_COMPLETE`<br>
 **基线 commit**：`f606816`<br>
 **日期**：2026-11-13<br>
 **范围**：`src/auv_planner`、`scripts/`、`tests/`；不移动 artifact 或 checkpoint。
@@ -65,6 +65,39 @@ manifest 写出。
 
 本 Goal 只执行 P0-P2 中有等价性证据的 manifest 收敛；CSV、report 和大模块拆分不
 在本 pilot 中机械合并。
+
+## 7. G03 最终验证与 G04 交接
+
+最终分支验证结果：
+
+| 检查 | 结果 |
+|---|---|
+| pytest（PVS/MSS 完整环境） | `100 passed` |
+| 候选 Python diff 的 ruff check | PASS |
+| 候选 Python diff 的 format check | PASS；10 files already formatted |
+| 全仓 ruff | 38 个存量错误，候选文件无新增 |
+| 全仓 format | 6 个存量文件待格式化 |
+| mypy | `3 errors / 2 files`，与基线一致 |
+| shape | `0 new / 119 suppressed` |
+| dependency | PASS |
+
+允许自动处理的目录和行为：
+
+| 级别 | 候选 | 证伪条件 | 边界 |
+|---|---|---|---|
+| L0 | 只对候选 diff 运行 ruff import 排序/format | 产生非格式 diff、候选 lint 失败或测试回退 | 禁止把 38 个存量 lint/6 个 format 欠账混入 |
+| L1 | 合并 `_write_report` 中字节完全等价的报告写出 | Markdown 字节、字段顺序、空值或父目录行为变化 | 先建立 report fixture，再迁移一个实验 |
+| L1 | 统一语义完全等价的 `_slerp` 实现 | 姿态插值逐值不等价、NaN/归一化边界变化 | 需要数值 golden fixture 和规划器回归 |
+
+五个 `_write_csv` 已审计但不合并：空输入、字段来源、list 编码和父目录策略不同。
+CSV 自动合并必须重新建立逐 writer 的字节等价 fixture，并默认只生成建议。
+
+禁止自动修改：M5 scene catalog、M6 recovery、M7 budget 的 manifest schema、
+seed/scene 语义、评价协议、planner 证书、`doc/goals/` 历史结果、`artifacts/`、
+`outputs/` 和 `checkpoints/`。
+
+允许修改目录是 `src/auv_planner/`、`scripts/` 和 `tests/`；实验契约文件必须先更新
+契约测试。G04 shadow 只读；任何自动写入必须使用独立 worktree 并保留 diff 供审查。
 
 ## 6. 只读盘点命令
 
