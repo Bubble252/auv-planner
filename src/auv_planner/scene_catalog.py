@@ -19,6 +19,8 @@ from auv_core.scenarios import (
     m5_sphere_detour_scene,
 )
 
+from ._json import write_json_document
+
 
 @dataclass(frozen=True)
 class M5SceneSpec:
@@ -105,11 +107,7 @@ def scene_catalog_manifest() -> dict[str, Any]:
 def write_scene_catalog_manifest(path: Path | str) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(
-        json.dumps(scene_catalog_manifest(), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    return output_path
+    return write_json_document(output_path, scene_catalog_manifest())
 
 
 def _obstacle_manifest(obstacle: Obstacle) -> dict[str, Any]:
