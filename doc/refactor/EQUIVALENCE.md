@@ -40,4 +40,27 @@ cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20
   -m pytest -q tests/test_json_io.py tests/test_runner.py
 ```
 
-- 结果：`PENDING`
+Preflight 证据：
+
+```yaml
+skill_usage:
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+    module: src/auv_planner/evaluation/runner.py
+```
+
+- 候选 commit：`138265d`；测试 commit：`d1a8fd1`、`10f926b`；基线 commit：`da47735`；
+- 针对性测试：`9 passed`；
+- 全量测试：`97 passed`；
+- ruff：helper、runner 和两个测试全部 PASS；
+- format：四个改动文件全部 PASS；
+- mypy：`3 errors / 2 files`，与基线一致，无新增类型错误；
+- shape：`0 new violations, 119 suppressed`；
+- dependency checker：`repository dependency boundaries: ok`；
+- 字节等价：sorted keys、2-space indent、UTF-8、末尾单个换行由 fixture 测试锁定；
+- 已知失败：无新增；
+- 是否新增失败：`no`；
+- 回滚 commit：`f606816`；
+- 结论：`PASS`
