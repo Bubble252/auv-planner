@@ -4,12 +4,13 @@ import json
 from pathlib import Path
 
 import numpy as np
-
 from auv_core.geometry import point_clearance
+
 from auv_planner.scene_catalog import (
     m5_scene_catalog,
     scene_catalog_digest,
     scene_catalog_manifest,
+    write_scene_catalog_manifest,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,16 @@ def test_m5_scene_manifest_matches_generated_catalog() -> None:
     committed = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     generated = scene_catalog_manifest()
     assert committed == generated
+
+
+def test_scene_catalog_writer_matches_stable_json_bytes(tmp_path: Path) -> None:
+    path = tmp_path / "nested" / "m5_scene_catalog.json"
+
+    written = write_scene_catalog_manifest(path)
+
+    expected = json.dumps(scene_catalog_manifest(), indent=2, sort_keys=True) + "\n"
+    assert written == path
+    assert path.read_text(encoding="utf-8") == expected
 
 
 def test_m5_scenes_have_start_and_goal_inside_bounds_and_clear_of_obstacles() -> None:

@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import csv
-import json
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from auv_core.contracts import (
     CapabilitySet,
     EvalResult,
@@ -18,6 +16,8 @@ from auv_core.contracts import (
     ScenarioConfig,
     TaskSpec,
 )
+
+from .._json import write_json_document
 from ..interfaces import GlobalPlanner
 from ..metrics import compute_path_metrics
 
@@ -192,10 +192,7 @@ def write_metrics_csv(records: Iterable[EvaluationRecord], path: Path | str) -> 
 def write_run_log(record: EvaluationRecord, path: Path | str) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as handle:
-        json.dump(record.log_dict(), handle, indent=2, sort_keys=True)
-        handle.write("\n")
-    return output_path
+    return write_json_document(output_path, record.log_dict())
 
 
 def run_suite(

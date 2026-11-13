@@ -1,0 +1,6 @@
+version: 1
+status: ref_global_complete
+waivers: []
+
+# 存量超大模块由 CODE_SHAPE_BASELINE.json 做 ratchet 抑制；未触碰时不进入新代码
+# 标准。若候选触碰历史未格式化文件，再为具体路径和检查项新增有到期 Goal 的 waiver。

@@ -6,14 +6,16 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from auv_core.contracts import Obstacle, ObstacleMap, State, UniformCurrent, WorldSnapshot
+from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
+
 from auv_planner.experiments.m6_recovery import dead_end_scene
 from auv_planner.experiments.m7_budget import (
     _audit_full_cached,
     _audit_states,
     m7_budget_manifest,
     m7_probes,
+    write_m7_budget_manifest,
 )
 from auv_planner.recovery import (
     DEFAULT_FAULT_PROFILES,
@@ -28,7 +30,6 @@ from auv_planner.recovery import (
     RecoveryQuerySession,
     RecoveryQueryStatus,
 )
-from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / "configs" / "experiments" / "m7_budget.json"
@@ -189,6 +190,16 @@ def test_m7_budget_manifest_includes_all_profiles_and_probes() -> None:
 
 def test_m7_budget_manifest_matches_committed_file() -> None:
     assert json.loads(MANIFEST_PATH.read_text(encoding="utf-8")) == m7_budget_manifest()
+
+
+def test_m7_budget_manifest_writer_matches_stable_json_bytes(tmp_path: Path) -> None:
+    path = tmp_path / "nested" / "m7_budget.json"
+
+    written = write_m7_budget_manifest(path)
+
+    expected = json.dumps(m7_budget_manifest(), indent=2, sort_keys=True) + "\n"
+    assert written == path
+    assert path.read_text(encoding="utf-8") == expected
 
 
 def test_path_audit_clamps_coverage_and_reports_warm_cache_per_pass() -> None:

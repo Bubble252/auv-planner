@@ -14,8 +14,10 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from auv_core.contracts import ScenarioConfig, State
+from auv_core.scenarios import m5_multi_obstacle_scene, m5_single_corner_scene
+
+from .._json import write_json_document
 from ..recovery import (
     DEFAULT_FAULT_PROFILES,
     DEFAULT_FAULTS,
@@ -30,7 +32,6 @@ from ..recovery import (
     build_maneuvers,
     prefilter_state,
 )
-from auv_core.scenarios import m5_multi_obstacle_scene, m5_single_corner_scene
 from .m6_recovery import m6_key_nodes
 
 ONLINE_BUDGET_S = 10.0
@@ -122,11 +123,7 @@ def m7_audit_states(
 def write_m7_budget_manifest(path: Path | str) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(
-        json.dumps(m7_budget_manifest(), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    return output_path
+    return write_json_document(output_path, m7_budget_manifest())
 
 
 def run_m7_budget(

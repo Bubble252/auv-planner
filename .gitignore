@@ -11,3 +11,4 @@ outputs/
 logs/
 checkpoints/
 *.log
+.worktrees/

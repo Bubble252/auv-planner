@@ -6,7 +6,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from auv_core.attitude import euler_from_quaternion
 from auv_core.contracts import (
     Obstacle,
@@ -16,12 +15,15 @@ from auv_core.contracts import (
     VehicleSpec,
     WorldSnapshot,
 )
+from auv_core.geometry import hull_clearance_details, hull_from_vehicle
+from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
+
 from auv_planner.experiments.m6_recovery import (
     dead_end_scene,
     m6_config_manifest,
     m6_key_nodes,
+    write_m6_config_manifest,
 )
-from auv_core.geometry import hull_clearance_details, hull_from_vehicle
 from auv_planner.recovery import (
     DEFAULT_FAULTS,
     ClearanceModel,
@@ -32,7 +34,6 @@ from auv_planner.recovery import (
     RecoveryConfig,
     build_maneuvers,
 )
-from auv_core.scenarios import m5_open_water_scene, remus100_vehicle
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = REPO_ROOT / "configs" / "experiments" / "m6_recovery.json"
@@ -306,3 +307,13 @@ def test_m6_config_manifest_matches_committed_file() -> None:
     committed = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     assert committed == m6_config_manifest()
     assert len(m6_key_nodes()) == 7
+
+
+def test_m6_config_manifest_writer_matches_stable_json_bytes(tmp_path: Path) -> None:
+    path = tmp_path / "nested" / "m6_recovery.json"
+
+    written = write_m6_config_manifest(path)
+
+    expected = json.dumps(m6_config_manifest(), indent=2, sort_keys=True) + "\n"
+    assert written == path
+    assert path.read_text(encoding="utf-8") == expected
