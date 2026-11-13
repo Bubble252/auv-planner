@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from auv_planner.experiments.m7_1 import _write_csv as write_m7_1_csv
 from auv_planner.experiments.m7_2 import _write_csv as write_m7_2_csv
 
-Writer = Callable[[Path, list[dict[str, object]]], None]
+Writer = Callable[[Path, list[dict[str, Any]]], None]
 WRITERS = pytest.mark.parametrize(
     "writer",
     [write_m7_1_csv, write_m7_2_csv],
@@ -19,7 +20,7 @@ WRITERS = pytest.mark.parametrize(
 @WRITERS
 def test_m7_writers_use_first_row_fields_and_csv_newlines(tmp_path: Path, writer: Writer) -> None:
     path = tmp_path / "paths.csv"
-    rows = [
+    rows: list[dict[str, Any]] = [
         {"alpha": "plain", "beta": "1", "note": "comma,value"},
         {"alpha": 'quote"value', "beta": "2", "note": "line\nbreak"},
     ]
