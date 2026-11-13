@@ -60,8 +60,8 @@ manifest 写出。
 | P0 | GLOBAL-A1：稳定 JSON 文档 helper | 纯函数 + `evaluation/runner.py` 一个调用点 | DONE；字节等价测试和 runner 全量回归 |
 | P1 | GLOBAL-A2：scene catalog 迁移到同一 helper | payload、digest 和父目录行为不变 | DONE；catalog 字节测试和全量回归 |
 | P2 | GLOBAL-A3：M6/M7 manifest 迁移 | 只改写出边界，不改 manifest 字段 | DONE；manifest 字节测试和全量回归 |
-| P3 | GLOBAL-A4：CSV 写出差异表 | 只读比较字段/空值/编码 | IN_PROGRESS；只读输出，不做合并 |
-| P4 | 入口和超大模块拆分 | 一次一个职责 | PENDING；需单独 Goal 或明确候选 |
+| P3 | GLOBAL-A4：CSV 写出差异表 | 只读比较字段/空值/编码 | DONE；见 `CSV_AUDIT.md`，不合并 |
+| P4 | 入口和超大模块拆分 | 一次一个职责 | DEFERRED；需单独 Goal 或明确候选 |
 
 本 Goal 只执行 P0-P2 中有等价性证据的 manifest 收敛；CSV、report 和大模块拆分不
 在本 pilot 中机械合并。
