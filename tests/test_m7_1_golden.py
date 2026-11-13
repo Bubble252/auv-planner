@@ -31,7 +31,7 @@ EXPECTED_FILES = {
     "trajectories.csv",
 }
 EXPECTED_SHA256 = {
-    "manifest.json": "f19bf45c6721034f4b2f51ef51466488c73ee5f2f913c9908f660f29cbd4bd67",
+    "manifest.json": "9babfb970d80cb7274ea50215a8a43da13fe7ebe0c54b748dd5472943c2e219d",
     "paths.csv": "6436949885be4f165eb061164633d379931592d5225efec67276420030f39062",
     "points.csv": "64308d1ad77cd137a32eec2dbda30f910d65e8f8dd2c3596f3394a212b6bcb96",
     "repair_attempts.csv": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
@@ -43,7 +43,13 @@ EXPECTED_SHA256 = {
 def _normalize(value: Any) -> Any:
     if isinstance(value, dict):
         return {
-            key: ("<time>" if key in RUNTIME_TIME_KEYS else _normalize(item))
+            key: (
+                "<time>"
+                if key in RUNTIME_TIME_KEYS
+                else "<commit>"
+                if key == "git_commit"
+                else _normalize(item)
+            )
             for key, item in value.items()
         }
     if isinstance(value, list):
