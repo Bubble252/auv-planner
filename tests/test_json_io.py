@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from auv_planner._json import dumps_json_document, write_json_document
 
 
