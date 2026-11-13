@@ -8,9 +8,24 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
-from auv_core.contracts import Obstacle, ObstacleMap, ScenarioConfig, State, UniformCurrent, WorldSnapshot
+from auv_core.contracts import (
+    Obstacle,
+    ObstacleMap,
+    ScenarioConfig,
+    State,
+    UniformCurrent,
+    WorldSnapshot,
+)
 from auv_core.current import DepthShearCurrent
+from auv_core.scenarios import (
+    m5_cylinder_gate_scene,
+    m5_depth_shear_gate_scene,
+    m5_open_water_scene,
+    m5_s_bend_corridor_scene,
+    m5_sphere_detour_scene,
+)
+
+from .._json import write_json_document
 from ..recovery import (
     DEFAULT_DIAGNOSIS_DELAYS_S,
     DEFAULT_FAULTS,
@@ -21,13 +36,6 @@ from ..recovery import (
     RecoverabilityChecker,
     RecoveryAssessment,
     RecoveryConfig,
-)
-from auv_core.scenarios import (
-    m5_cylinder_gate_scene,
-    m5_depth_shear_gate_scene,
-    m5_open_water_scene,
-    m5_s_bend_corridor_scene,
-    m5_sphere_detour_scene,
 )
 
 
@@ -278,11 +286,7 @@ def m6_config_manifest() -> dict[str, Any]:
 def write_m6_config_manifest(path: Path | str) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(
-        json.dumps(m6_config_manifest(), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    return output_path
+    return write_json_document(output_path, m6_config_manifest())
 
 
 def _assessment_margin(assessment: RecoveryAssessment) -> float | None:
