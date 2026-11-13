@@ -157,4 +157,33 @@ cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20
   -m pytest -q tests/test_recovery.py tests/test_recovery_query.py tests/test_json_io.py
 ```
 
-- 结果：`PENDING`
+Preflight 证据：
+
+```yaml
+skill_usage:
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+    module: src/auv_planner/experiments/m6_recovery.py
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-global-20261113
+    module: src/auv_planner/experiments/m7_budget.py
+```
+
+- 候选 commit：`f9c6d16`；测试 commit：`5b34a08`；计划 commit：`8afc426`；
+- shape 基线刷新：`d2a1331`；
+- 针对性测试：`28 passed`；
+- 全量测试：`100 passed`；
+- ruff：两个 experiment 模块和两个测试全部 PASS；
+- format：相关文件全部 PASS；
+- mypy：`3 errors / 2 files`，与基线一致，无新增类型错误；
+- shape：刷新 ratchet 后 `0 new violations, 119 suppressed`；
+- dependency checker：`repository dependency boundaries: ok`；
+- manifest 字节：M6/M7 payload、字段、排序、缩进和末尾换行均由测试锁定；
+- 已知失败：无新增；
+- 是否新增失败：`no`；
+- 回滚 commit：`0d4c46b`；
+- 结论：`PASS`
