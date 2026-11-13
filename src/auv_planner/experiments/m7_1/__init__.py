@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .audit import audit_trajectory, coverage_metrics, sample_trajectory_states
+from .io import _write_csv
 from .repair import _candidate_states, _plan_request
 from .runner import (
     AuditPoint,
@@ -10,7 +11,6 @@ from .runner import (
     M71ExperimentResult,
     PathAudit,
     RepairAttempt,
-    _write_csv,
     m71_case_specs,
     run_m7_1,
 )
