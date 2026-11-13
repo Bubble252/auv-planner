@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from .audit import audit_trajectory, coverage_metrics, sample_trajectory_states
 from .runner import (
     AuditPoint,
     M71CaseResult,
@@ -11,11 +12,8 @@ from .runner import (
     _candidate_states,
     _plan_request,
     _write_csv,
-    audit_trajectory,
-    coverage_metrics,
     m71_case_specs,
     run_m7_1,
-    sample_trajectory_states,
 )
 
 __all__ = [
