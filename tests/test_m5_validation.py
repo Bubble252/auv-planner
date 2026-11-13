@@ -1,13 +1,23 @@
 from __future__ import annotations
 
+import shutil
 from typing import Any
 
+import pytest
+
+from auv_planner.dynamics.mss_remus100 import _default_mss_source_dir
 from auv_planner.experiments.m5_validation import (
     proposed_model_thresholds,
     run_derivative_comparison,
 )
 
+MSS_AVAILABLE = shutil.which("octave") is not None and _default_mss_source_dir().is_dir()
 
+
+@pytest.mark.skipif(
+    not MSS_AVAILABLE,
+    reason="Octave and the local MSS tree are required for the model comparison",
+)
 def test_m5_derivative_differences_stay_within_audited_model_bands() -> None:
     rows: dict[str, dict[str, Any]] = {str(row["case"]): row for row in run_derivative_comparison()}
     calm = ("calm_straight", "calm_rudder", "calm_stern_plane", "combined_attitude")
