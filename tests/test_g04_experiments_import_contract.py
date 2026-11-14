@@ -36,3 +36,33 @@ def test_experiments_package_uses_planner_bench_implementations() -> None:
 
     assert experiments.M7Probe is M7Probe
     assert experiments.M72Config is M72Config
+
+
+def test_m7_1_package_and_submodules_alias_path_audit() -> None:
+    aliases = {
+        "m7_1.audit": "planner_bench.path_audit.audit",
+        "m7_1.io": "planner_bench.path_audit.io",
+        "m7_1.repair": "planner_bench.path_audit.repair",
+        "m7_1.runner": "planner_bench.path_audit.runner",
+        "m7_1.types": "planner_bench.path_audit.types",
+    }
+    for old_name, new_name in aliases.items():
+        old = importlib.import_module(f"auv_planner.experiments.{old_name}")
+        new = importlib.import_module(f"auv_planner.experiments.{new_name}")
+        assert old is new
+
+    old_package = importlib.import_module("auv_planner.experiments.m7_1")
+    new_package = importlib.import_module("auv_planner.experiments.planner_bench.path_audit")
+    for public_name in old_package.__all__:
+        assert getattr(old_package, public_name) is getattr(new_package, public_name)
+
+    from auv_planner.experiments.m7_1 import M71Config, _plan_request
+    from auv_planner.experiments.planner_bench.path_audit import (
+        M71Config as PathAuditM71Config,
+    )
+    from auv_planner.experiments.planner_bench.path_audit import (
+        _plan_request as path_audit_plan_request,
+    )
+
+    assert M71Config is PathAuditM71Config
+    assert _plan_request is path_audit_plan_request
