@@ -383,18 +383,32 @@ goal: META-G04-EXPERIMENTS
 candidate: EXPERIMENTS-GOLDEN-PORTABILITY
 repository: settled_全局规划器
 branch: fix/g04-golden-portability-20261114
-base_commit: 2d456d0
+followup_branch: fix/g04-golden-float-20261114
+base_commit: 0ec8c4a
 files:
   - tests/test_m7_1_golden.py
 public_api_change: none
 ```
 
-服务器同步验证发现 `manifest.json` 的 golden 归一化只屏蔽了运行时间和 commit，但仍把
-`hardware` 中的 hostname、CPU 数量、BLAS 配置和 Python 路径纳入哈希，导致不同机器
-必然产生不同结果。修复只触及测试：归一化整个 `hardware` 块为 `<hardware>`，并更新
-对应的 manifest 期望哈希；算法、字段、artifact schema 和运行行为不变。
+服务器同步验证发现两处不可移植性：
 
-本地与服务器使用相同归一化后，manifest SHA256 均为
-`99c9898320a8664cd5c4d18e4afab3ba053fdb7e2cdf133adf8a347328f67992`。定向测试
-`11 passed`；全量测试 `114 passed`；shape `0 new / 0 suppressed`；dependency `ok`；
-ruff 与 format PASS。
+1. `manifest.json` 的归一化只屏蔽运行时间和 commit，但仍把 `hardware` 中的
+   hostname、CPU 数量、BLAS 配置和 Python 路径纳入哈希；
+2. 轨迹 CSV 保留浮点末位，同一算法在不同 BLAS/CPU 上出现约 `1e-16` 的差异。
+
+修复只触及测试：整个 `hardware` 块归一化为 `<hardware>`；CSV 数值统一格式化为
+12 位小数；更新对应的期望哈希。算法、字段、artifact schema 和运行行为不变。
+
+本地与服务器使用相同归一化后，六个 golden 文件 SHA256 全部一致：
+
+| 文件 | SHA256 |
+|---|---|
+| `manifest.json` | `99c9898320a8664cd5c4d18e4afab3ba053fdb7e2cdf133adf8a347328f67992` |
+| `paths.csv` | `36794362e7ef6b4b3754e64ac70663126d9269484c805b5234d781588c8505f6` |
+| `points.csv` | `4ba82f5da234ba8ccd4f64251dd19cda7f8fda47da5c8a6e4e1052045d5e4f1e` |
+| `repair_attempts.csv` | `7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6` |
+| `summary.json` | `9ad13fda85d478b82acdcb534028f99ae62927f7efb5ef08e9972e83f3a02b7c` |
+| `trajectories.csv` | `77b418d006474c2b6028a8d1eedfde5e4271ed34488dd85d3c8709eacb201a0a` |
+
+定向测试 `12 passed`；全量测试 `115 passed`；shape `0 new / 0 suppressed`；
+dependency `ok`；ruff 与 format PASS。
