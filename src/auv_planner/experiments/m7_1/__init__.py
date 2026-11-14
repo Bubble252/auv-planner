@@ -1,11 +1,11 @@
-"""Stable public surface for the M7.1 planner trajectory audit."""
+"""Compatibility surface for the historical M7.1 audit package.
+
+Non-responsibility: does not duplicate audit, repair, I/O, or runner logic.
+"""
 
 from __future__ import annotations
 
-from .audit import audit_trajectory, coverage_metrics, sample_trajectory_states
-from .io import _write_csv
-from .repair import _candidate_states, _plan_request
-from .runner import (
+from ..planner_bench.path_audit import (
     AuditPoint,
     M71CaseResult,
     M71CaseSpec,
@@ -13,8 +13,14 @@ from .runner import (
     M71ExperimentResult,
     PathAudit,
     RepairAttempt,
+    _candidate_states,
+    _plan_request,
+    _write_csv,
+    audit_trajectory,
+    coverage_metrics,
     m71_case_specs,
     run_m7_1,
+    sample_trajectory_states,
 )
 
 __all__ = [

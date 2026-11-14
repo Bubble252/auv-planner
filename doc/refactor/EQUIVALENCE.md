@@ -310,3 +310,68 @@ cd /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-g04-big1-
 - dependency checker：`repository dependency boundaries: ok`；
 - 回滚 commit：`923663e`；
 - 结论：`PASS`
+
+## 6. 候选 G04-EXPERIMENTS-E1
+
+```yaml
+goal: META-G04-EXPERIMENTS
+candidate: EXPERIMENTS-E1
+repository: settled_全局规划器
+base_commit: e55cf5f
+branch: refactor/g04-experiments-20261114
+implementation_commit: 9b4ac0c
+files:
+  - src/auv_planner/experiments/validation/closed_loop.py
+  - src/auv_planner/experiments/validation/model_validation.py
+  - src/auv_planner/experiments/validation/recovery.py
+  - src/auv_planner/experiments/m4_closed_loop.py
+  - src/auv_planner/experiments/m5_validation.py
+  - src/auv_planner/experiments/m6_recovery.py
+public_api_change: none
+```
+
+M4/M5/M6 归入 `experiments/validation/`。旧 `m*.py` 在 `sys.modules` 中指向新
+模块对象，因此旧/新 import、公共对象身份和模块级 monkeypatch 保持同一命名空间。
+全量测试 `111 passed`；定向契约测试验证模块身份和导出对象身份；shape
+`0 new / 114 suppressed`；dependency `ok`。
+
+## 7. 候选 G04-EXPERIMENTS-E2
+
+```yaml
+goal: META-G04-EXPERIMENTS
+candidate: EXPERIMENTS-E2
+repository: settled_全局规划器
+base_commit: e55cf5f
+branch: refactor/g04-experiments-20261114
+implementation_commit: 87fda7f
+files:
+  - src/auv_planner/experiments/planner_bench/planner_comparison.py
+  - src/auv_planner/experiments/planner_bench/budget.py
+  - src/auv_planner/experiments/m7_2.py
+  - src/auv_planner/experiments/m7_budget.py
+public_api_change: none
+```
+
+M7.2 和 budget 归入 `experiments/planner_bench/`。`m7_2`、`m7_budget` 保留同一
+模块对象别名。固定 CSV writer 测试、M7.2 artifact 测试和全量测试均通过；全量
+`112 passed`；shape `0 new / 112 suppressed`；dependency `ok`。
+
+## 8. 候选 G04-EXPERIMENTS-E3
+
+```yaml
+goal: META-G04-EXPERIMENTS
+candidate: EXPERIMENTS-E3
+repository: settled_全局规划器
+base_commit: e55cf5f
+branch: refactor/g04-experiments-20261114
+implementation_commit: 62b8fe9
+files:
+  - src/auv_planner/experiments/planner_bench/path_audit/
+  - src/auv_planner/experiments/m7_1/
+public_api_change: none
+```
+
+M7.1 package 归入 `planner_bench/path_audit/`，旧 `m7_1` package 及五个子模块保留
+兼容入口。`test_m7_1_golden.py` 的固定 case、CSV、summary、manifest 和 result
+signature 全部通过；全量测试 `113 passed`；shape `0 new / 112 suppressed`；
+dependency `ok`。E3 在 E1/E2 全部通过后执行。
