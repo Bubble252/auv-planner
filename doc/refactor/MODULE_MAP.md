@@ -8,6 +8,7 @@
 | 模块路径 | 主要职责 | 非职责 | 公共 API | 对应测试 | Owner | Waiver |
 |---|---|---|---|---|---|---|
 | `src/auv_planner/_json.py` | 稳定 JSON 文档文本和文件写出 | 不校验 schema、不创建实验目录语义 | 无（下划线内部模块） | `tests/test_json_io.py` | planner | 无 |
+| `src/auv_planner/_csv.py` | M7 空结果合法 CSV 的字节稳定写出 | 不创建父目录、不推断 schema、不规范化 list 值 | 无（下划线内部模块） | `tests/test_csv_writers.py` | planner | 无 |
 | `src/auv_planner/evaluation/runner.py` | 单场景评价、CSV 和 run log 写出 | 不定义 planner、scene 或 success 规则 | `EvaluationRecord`, `run_scenario`, `write_run_log` | `tests/test_runner.py` | evaluation | 无 |
 | `src/auv_planner/evaluation/closed_loop.py` | 闭环评价编排和日志 | 不定义控制器或场景 | `ClosedLoopResult` 等 | 闭环评价测试 | evaluation | 无 |
 | `src/auv_planner/scene_catalog.py` | M5 固定场景 catalog、manifest 和 digest | 不执行规划或评价 | `m5_scene_catalog`, `scene_catalog_manifest` | `tests/test_m5_scene_catalog.py` | scenes | 无 |

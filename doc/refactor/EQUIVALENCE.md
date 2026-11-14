@@ -187,3 +187,65 @@ skill_usage:
 - 是否新增失败：`no`；
 - 回滚 commit：`0d4c46b`；
 - 结论：`PASS`
+
+## 4. 候选 GLOBAL-A4
+
+```yaml
+goal: META-G04-CSV
+candidate: GLOBAL-A4
+repository: settled_全局规划器
+base_commit: 4fe888e
+branch: refactor/g04-csv-20261113
+files:
+  - src/auv_planner/_csv.py
+  - src/auv_planner/experiments/m7_1.py
+  - src/auv_planner/experiments/m7_2.py
+  - tests/test_csv_writers.py
+public_api_change: none
+```
+
+GLOBAL-A4 只合并 `m7_1.py` 与 `m7_2.py` 中字节等价的 CSV writer。两者都允许空
+结果写空文件、使用第一行 key 作为 header、原样写出 list 值、不创建父目录，并使用
+`newline=""`。M5/M6/M7 budget 和其他 report writer 保留原实现。
+
+| 项目 | 重构前 | 重构后 | 证据 |
+|---|---|---|---|
+| 空 rows | 写空文件 | 相同 | `test_csv_writers.py` |
+| 字段顺序 | 第一条记录 key | 相同 | 字节 fixture |
+| 特殊字符/换行 | CSV 默认转义与 `\r\n` | 相同 | 字节 fixture |
+| list 编码 | Python 字符串表示 | 相同 | 字节 fixture |
+| 父目录 | 不创建 | 相同 | `FileNotFoundError` 测试 |
+| 公共入口 | `_write_csv` 私有函数 | 保留兼容 wrapper | 导入与测试 |
+| RNG / 全局状态 | 不消耗/不修改 | 不变 | 纯写出检查 |
+
+Preflight 证据：
+
+```yaml
+skill_usage:
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-g04-csv-20261113
+    module: src/auv_planner/experiments/m7_1.py
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-g04-csv-20261113
+    module: src/auv_planner/experiments/m7_2.py
+  - skill: auv-refactor-guard
+    phase: preflight
+    outcome: passed
+    repo: /home/bubble/水下机器人/settled_全局规划器/.worktrees/ref-g04-csv-20261113
+    module: src/auv_planner/_csv.py
+```
+
+- 测试 commit：`3826b38`、`4a78d54`；helper commit：`22e09aa`；source commit：`3fe93d4`；
+- shape baseline refresh：`9419883`；
+- 定向测试：`21 passed`；
+- 全量测试：`108 passed`；
+- ruff / format：改动文件 PASS；
+- mypy：`3 errors / 2 files`，与基线一致；
+- shape：刷新后 `0 new violations, 119 suppressed`；
+- dependency checker：`repository dependency boundaries: ok`；
+- 回滚 commit：`4fe888e`；
+- 结论：`PASS`
