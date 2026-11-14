@@ -4,6 +4,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -32,11 +33,11 @@ EXPECTED_FILES = {
 }
 EXPECTED_SHA256 = {
     "manifest.json": "99c9898320a8664cd5c4d18e4afab3ba053fdb7e2cdf133adf8a347328f67992",
-    "paths.csv": "6436949885be4f165eb061164633d379931592d5225efec67276420030f39062",
-    "points.csv": "64308d1ad77cd137a32eec2dbda30f910d65e8f8dd2c3596f3394a212b6bcb96",
+    "paths.csv": "36794362e7ef6b4b3754e64ac70663126d9269484c805b5234d781588c8505f6",
+    "points.csv": "4ba82f5da234ba8ccd4f64251dd19cda7f8fda47da5c8a6e4e1052045d5e4f1e",
     "repair_attempts.csv": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
     "summary.json": "9ad13fda85d478b82acdcb534028f99ae62927f7efb5ef08e9972e83f3a02b7c",
-    "trajectories.csv": "46e9e30b7a70dd8bd663ecbe16d37d83210bc1a0e36d00a3c9ae04af37a15a45",
+    "trajectories.csv": "77b418d006474c2b6028a8d1eedfde5e4271ed34488dd85d3c8709eacb201a0a",
 }
 
 
@@ -64,7 +65,10 @@ def _normalized_csv_bytes(path: Path) -> bytes:
         rows = list(csv.DictReader(handle))
     fieldnames = list(rows[0]) if rows else []
     normalized = [
-        {key: ("<time>" if key in RUNTIME_TIME_KEYS else value) for key, value in row.items()}
+        {
+            key: ("<time>" if key in RUNTIME_TIME_KEYS else _normalize_csv_value(value))
+            for key, value in row.items()
+        }
         for row in rows
     ]
     buffer = io.StringIO()
@@ -72,6 +76,16 @@ def _normalized_csv_bytes(path: Path) -> bytes:
     writer.writeheader()
     writer.writerows(normalized)
     return buffer.getvalue().encode()
+
+
+def _normalize_csv_value(value: str) -> str:
+    try:
+        numeric = float(value)
+    except ValueError:
+        return value
+    if not math.isfinite(numeric):
+        return value
+    return f"{numeric:.12f}"
 
 
 def _normalized_bytes(path: Path) -> bytes:
@@ -87,6 +101,10 @@ def test_golden_normalization_masks_host_hardware() -> None:
     assert _normalize({"hardware": {"hostname": "host-a", "cpu_count": 32}}) == {
         "hardware": "<hardware>"
     }
+
+
+def test_golden_normalization_collapses_float_tail() -> None:
+    assert _normalize_csv_value("0.26201381142015484") == "0.262013811420"
 
 
 def test_m7_1_golden_artifacts_and_result_signature(tmp_path: Path) -> None:
