@@ -31,7 +31,7 @@ EXPECTED_FILES = {
     "trajectories.csv",
 }
 EXPECTED_SHA256 = {
-    "manifest.json": "9babfb970d80cb7274ea50215a8a43da13fe7ebe0c54b748dd5472943c2e219d",
+    "manifest.json": "99c9898320a8664cd5c4d18e4afab3ba053fdb7e2cdf133adf8a347328f67992",
     "paths.csv": "6436949885be4f165eb061164633d379931592d5225efec67276420030f39062",
     "points.csv": "64308d1ad77cd137a32eec2dbda30f910d65e8f8dd2c3596f3394a212b6bcb96",
     "repair_attempts.csv": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
@@ -44,7 +44,9 @@ def _normalize(value: Any) -> Any:
     if isinstance(value, dict):
         return {
             key: (
-                "<time>"
+                "<hardware>"
+                if key == "hardware"
+                else "<time>"
                 if key in RUNTIME_TIME_KEYS
                 else "<commit>"
                 if key == "git_commit"
@@ -79,6 +81,12 @@ def _normalized_bytes(path: Path) -> bytes:
         payload = json.loads(path.read_text(encoding="utf-8"))
         return (json.dumps(_normalize(payload), indent=2, sort_keys=True) + "\n").encode()
     return path.read_bytes()
+
+
+def test_golden_normalization_masks_host_hardware() -> None:
+    assert _normalize({"hardware": {"hostname": "host-a", "cpu_count": 32}}) == {
+        "hardware": "<hardware>"
+    }
 
 
 def test_m7_1_golden_artifacts_and_result_signature(tmp_path: Path) -> None:

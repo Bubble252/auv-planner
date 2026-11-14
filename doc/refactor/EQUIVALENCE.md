@@ -375,3 +375,26 @@ M7.1 package 归入 `planner_bench/path_audit/`，旧 `m7_1` package 及五个�
 兼容入口。`test_m7_1_golden.py` 的固定 case、CSV、summary、manifest 和 result
 signature 全部通过；全量测试 `113 passed`；shape `0 new / 112 suppressed`；
 dependency `ok`。E3 在 E1/E2 全部通过后执行。
+
+## 9. G04-EXPERIMENTS golden 可移植性修复
+
+```yaml
+goal: META-G04-EXPERIMENTS
+candidate: EXPERIMENTS-GOLDEN-PORTABILITY
+repository: settled_全局规划器
+branch: fix/g04-golden-portability-20261114
+base_commit: 2d456d0
+files:
+  - tests/test_m7_1_golden.py
+public_api_change: none
+```
+
+服务器同步验证发现 `manifest.json` 的 golden 归一化只屏蔽了运行时间和 commit，但仍把
+`hardware` 中的 hostname、CPU 数量、BLAS 配置和 Python 路径纳入哈希，导致不同机器
+必然产生不同结果。修复只触及测试：归一化整个 `hardware` 块为 `<hardware>`，并更新
+对应的 manifest 期望哈希；算法、字段、artifact schema 和运行行为不变。
+
+本地与服务器使用相同归一化后，manifest SHA256 均为
+`99c9898320a8664cd5c4d18e4afab3ba053fdb7e2cdf133adf8a347328f67992`。定向测试
+`11 passed`；全量测试 `114 passed`；shape `0 new / 0 suppressed`；dependency `ok`；
+ruff 与 format PASS。
